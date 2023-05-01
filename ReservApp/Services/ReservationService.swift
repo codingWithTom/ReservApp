@@ -51,7 +51,8 @@ private extension ReservationServiceAdapter {
     reservationSubject.value = [
       Reservation(name: "John Doe", date: Date(), numberOfGuests: 4, occasion: .birthday),
       Reservation(name: "Jane Smith", date: Date().addingTimeInterval(86400), numberOfGuests: 2, occasion: .anniversary),
-      Reservation(name: "Bob Johnson", date: Date().addingTimeInterval(172800), numberOfGuests: 8, occasion: .other)
+      Reservation(name: "Bob Johnson", date: Date().addingTimeInterval(172800), numberOfGuests: 8, occasion: .other),
+      Reservation(name: "John Appleseed", date: Date().addingTimeInterval(827812), numberOfGuests: 5, occasion: .none)
     ]
   }
 }

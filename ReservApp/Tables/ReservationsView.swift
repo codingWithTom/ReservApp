@@ -8,16 +8,45 @@
 import SwiftUI
 
 struct ReservationsView: View {
+  @Environment(\.horizontalSizeClass) private var hClass
   @StateObject private var viewModel = ReservationsViewModel()
   @State private var showingReservationForm = false
   
   var body: some View {
-    List(viewModel.reservations) { reservation in
-      VStack(alignment: .leading) {
-        Text(reservation.name)
-          .font(.headline)
-        Text("Date: \(reservation.date), Guests: \(reservation.numberOfGuests), Occasion: \(reservation.occasion.displayName)")
-          .foregroundColor(.secondary)
+    ScrollView {
+      Grid {
+        GridRow {
+          Text("Name")
+            .font(.headline)
+          Text("Date")
+            .font(.headline)
+          if hClass == .regular {
+            Text("Time")
+              .font(.headline)
+          }
+          Text("# Guests")
+            .font(.headline)
+            .gridCellColumns(2)
+        }
+        ForEach(viewModel.reservations) { reservation in
+          GridRow {
+            Text(reservation.name)
+            Text(reservation.date, style: .date)
+              .gridCellColumns(
+                reservation.occasion == .none && hClass == .compact ? 2 : 1
+              )
+            if hClass == .regular {
+              Text(reservation.date, style: .time)
+            }
+            Text("\(reservation.numberOfGuests)")
+            if reservation.occasion != .none || hClass == .regular {
+              occasionIcon(for: reservation)
+            }
+          }
+          .padding()
+          
+          Divider()
+        }
       }
     }
     .navigationTitle("Reservations")
@@ -36,17 +65,27 @@ struct ReservationsView: View {
       }
     }
   }
+  
+  @ViewBuilder
+  private func occasionIcon(for reservation: Reservation) -> some View {
+    switch reservation.occasion {
+    case .birthday:
+      Image(systemName: "hands.sparkles")
+        .foregroundColor(.indigo)
+    case .anniversary:
+      Image(systemName: "flame.fill")
+        .foregroundColor(.orange)
+    case .other:
+      Image(systemName: "move.3d")
+        .foregroundColor(.cyan)
+    case .none:
+      EmptyView()
+    }
+  }
 }
 
 struct ReservationsView_Previews: PreviewProvider {
   static var previews: some View {
-    NavigationSplitView {
-      List {
-        Label("Reservations", systemImage: "plus")
-      }
-      .listStyle(.sidebar)
-    } detail: {
       ReservationsView()
-    }
   }
 }
