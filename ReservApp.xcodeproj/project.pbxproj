@@ -15,6 +15,7 @@
 		4016A74F29F96F200026F1B1 /* ReservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4016A74E29F96F200026F1B1 /* ReservationViewModel.swift */; };
 		4016A75129F96F390026F1B1 /* ReservationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4016A75029F96F390026F1B1 /* ReservationsViewModel.swift */; };
 		4016A75429F96F910026F1B1 /* ReservationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4016A75329F96F910026F1B1 /* ReservationService.swift */; };
+		40CEFDFC2A018DE500DD91B1 /* GuestTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CEFDFB2A018DE500DD91B1 /* GuestTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		4016A74E29F96F200026F1B1 /* ReservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewModel.swift; sourceTree = "<group>"; };
 		4016A75029F96F390026F1B1 /* ReservationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationsViewModel.swift; sourceTree = "<group>"; };
 		4016A75329F96F910026F1B1 /* ReservationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationService.swift; sourceTree = "<group>"; };
+		40CEFDFB2A018DE500DD91B1 /* GuestTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				4016A75229F96F870026F1B1 /* Services */,
-				4016A74929F969120026F1B1 /* Tables */,
+				4016A74929F969120026F1B1 /* Reservations */,
 				4016A73B29F968310026F1B1 /* ReservAppApp.swift */,
 				4016A73F29F968320026F1B1 /* Assets.xcassets */,
 				4016A74129F968320026F1B1 /* Preview Content */,
@@ -76,14 +78,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		4016A74929F969120026F1B1 /* Tables */ = {
+		4016A74929F969120026F1B1 /* Reservations */ = {
 			isa = PBXGroup;
 			children = (
 				4016A75529F970880026F1B1 /* ReservationForm */,
 				4016A74A29F969330026F1B1 /* ReservationsView.swift */,
 				4016A75029F96F390026F1B1 /* ReservationsViewModel.swift */,
 			);
-			path = Tables;
+			path = Reservations;
 			sourceTree = "<group>";
 		};
 		4016A75229F96F870026F1B1 /* Services */ = {
@@ -99,6 +101,7 @@
 			children = (
 				4016A74E29F96F200026F1B1 /* ReservationViewModel.swift */,
 				4016A74C29F969590026F1B1 /* ReservationView.swift */,
+				40CEFDFB2A018DE500DD91B1 /* GuestTableView.swift */,
 			);
 			path = ReservationForm;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			files = (
 				4016A75429F96F910026F1B1 /* ReservationService.swift in Sources */,
 				4016A74B29F969330026F1B1 /* ReservationsView.swift in Sources */,
+				40CEFDFC2A018DE500DD91B1 /* GuestTableView.swift in Sources */,
 				4016A74D29F969590026F1B1 /* ReservationView.swift in Sources */,
 				4016A73C29F968310026F1B1 /* ReservAppApp.swift in Sources */,
 				4016A75129F96F390026F1B1 /* ReservationsViewModel.swift in Sources */,
