@@ -25,6 +25,7 @@ extension ReservationOccasion {
 struct ReservationView: View {
   @Binding var isPresenting: Bool
   @StateObject private var viewModel = ReservationViewModel()
+  @State private var isShowingTable = false
   
   var body: some View {
     Form {
@@ -43,10 +44,31 @@ struct ReservationView: View {
       
       Section(header: Text("Number of Guests")) {
         Stepper(value: $viewModel.numberOfGuests, in: 1...8) {
-          Text("\(viewModel.numberOfGuests)")
+          Text("Adults: \(viewModel.numberOfGuests)")
         }
       }
       
+      Section(header:
+                HStack {
+        Text("Table")
+        Spacer()
+        Button(action: { withAnimation { isShowingTable.toggle() }}) {
+          Image(systemName: isShowingTable ? "chevron.down" : "chevron.up")
+            .foregroundColor(.secondary)
+        }
+        
+      }
+      ) {
+        if isShowingTable {
+          HStack {
+            Spacer()
+            GuestTableView(numberOfAdults: $viewModel.numberOfGuests)
+              .frame(maxWidth: 300)
+              .padding(40)
+            Spacer()
+          }
+        }
+      }
       
       Section(header: Text("Reservation Date")) {
         DatePicker("Date", selection: $viewModel.reservationDate,
