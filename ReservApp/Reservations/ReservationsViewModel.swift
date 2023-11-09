@@ -14,6 +14,7 @@ final class ReservationsViewModel: ObservableObject {
   }
   
   @Published var reservations: [Reservation] = []
+  @Published var upcomingReservation: Reservation?
   private var cancellable: AnyCancellable?
   
   private let dependencies: Dependencies
@@ -29,7 +30,13 @@ final class ReservationsViewModel: ObservableObject {
     cancellable = dependencies.reservationService.reservations
       .receive(on: RunLoop.main)
       .sink { [weak self] in
-        self?.reservations = $0
+        self?.upcomingReservation = $0.first
+        self?.reservations = Array($0.dropFirst())
       }
+  }
+  
+  func popNextReservation() {
+    upcomingReservation = reservations.first
+    reservations = Array(reservations.dropFirst())
   }
 }

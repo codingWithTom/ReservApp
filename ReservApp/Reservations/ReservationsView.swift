@@ -11,43 +11,36 @@ struct ReservationsView: View {
   @Environment(\.horizontalSizeClass) private var hClass
   @StateObject private var viewModel = ReservationsViewModel()
   @State private var showingReservationForm = false
+  @State private var isEditingReservation = false
+  @State private var cancelReservationToggle = false
+  @State private var seatedReservationToggle = false
   
   var body: some View {
     ScrollView {
-      Grid {
-        GridRow {
-          Text("Name")
-            .font(.headline)
-          Text("Date")
-            .font(.headline)
-          if hClass == .regular {
-            Text("Time")
-              .font(.headline)
-          }
-          Text("# Guests")
-            .font(.headline)
-            .gridCellColumns(2)
-        }
-        ForEach(viewModel.reservations) { reservation in
-          GridRow {
-            Text(reservation.name)
-            Text(reservation.date, style: .date)
-              .gridCellColumns(
-                reservation.occasion == .none && hClass == .compact ? 2 : 1
-              )
-            if hClass == .regular {
-              Text(reservation.date, style: .time)
+      if let upcomingReservation = viewModel.upcomingReservation {
+        HStack(spacing: 100) {
+          Text("Upcoming reservation: \(upcomingReservation.name) for \(upcomingReservation.numberOfGuests) guest at \(Text(upcomingReservation.date, style: .time))")
+            .phaseAnimator([1.0, 1.5]) { view, phase in
+              view
+                .scaleEffect(x: phase, y: phase)
+                .foregroundStyle(phase == 1 ? Color.primary : Color.red)
+            } animation: { _ in
+                .easeInOut(duration: 1)
             }
-            Text("\(reservation.numberOfGuests)")
-            if reservation.occasion != .none || hClass == .regular {
-              occasionIcon(for: reservation)
-            }
-          }
-          .padding()
           
-          Divider()
+          Button(action: { withAnimation { isEditingReservation.toggle() } }) {
+            Image(systemName: "command.circle.fill")
+          }
         }
+        .padding()
       }
+      
+      if isEditingReservation {
+        reservationButtons
+          .padding(.vertical)
+      }
+      
+      reservationList
     }
     .navigationTitle("Reservations")
     .toolbar {
@@ -62,6 +55,126 @@ struct ReservationsView: View {
     .sheet(isPresented: $showingReservationForm) {
       NavigationView {
         ReservationView(isPresenting: $showingReservationForm)
+      }
+    }
+  }
+  
+  private var reservationButtons: some View {
+    HStack(spacing: 40) {
+      Button(action: {
+        reservationButtonTapped()
+        cancelReservationToggle.toggle()
+      }) {
+        VStack {
+          Image(systemName: "person.2.slash.fill")
+          Text("No show / Canceled")
+        }
+      }
+      .tint(.red)
+      .keyframeAnimator(initialValue: ReservationButtonAnimation(), trigger: cancelReservationToggle) { content, value in
+        content
+          .rotationEffect(value.angle)
+          .offset(x: value.horizontalTranslation, y: value.verticalTranslation)
+      } keyframes: { _ in
+        KeyframeTrack(\.angle) {
+          LinearKeyframe(.zero, duration: 0.2)
+          SpringKeyframe(.degrees(20), duration: 0.1)
+          SpringKeyframe(.degrees(-20), duration: 0.1)
+          SpringKeyframe(.zero, duration: 0.1)
+          SpringKeyframe(.degrees(-20), duration: 0.1)
+          SpringKeyframe(.degrees(20), duration: 0.1)
+          SpringKeyframe(.zero, duration: 0.1)
+          LinearKeyframe(.degrees(30), duration: 2)
+        }
+        
+        KeyframeTrack(\.horizontalTranslation) {
+          LinearKeyframe(0, duration: 0.7)
+          CubicKeyframe(-10, duration: 0.2)
+          CubicKeyframe(40, duration: 2)
+          SpringKeyframe(-800)
+        }
+      }
+      
+      Button(action: {
+        reservationButtonTapped()
+        seatedReservationToggle.toggle()
+      }) {
+        VStack {
+          Image(systemName: "person.fill.checkmark")
+          Text("Guests seated")
+        }
+      }
+      .tint(.green)
+      .keyframeAnimator(initialValue: ReservationButtonAnimation(), trigger: seatedReservationToggle) { content, value in
+        content
+          .rotationEffect(value.angle)
+          .offset(x: value.horizontalTranslation, y: value.verticalTranslation)
+      } keyframes: { _ in
+        KeyframeTrack(\.horizontalTranslation) {
+          LinearKeyframe(0, duration: 0.4)
+          LinearKeyframe(60, duration: 0.8)
+          LinearKeyframe(120, duration: 0.8)
+          LinearKeyframe(250, duration: 0.8)
+          SpringKeyframe(800)
+        }
+        KeyframeTrack(\.verticalTranslation) {
+          LinearKeyframe(0, duration: 0.4)
+          CubicKeyframe(-20, duration: 0.4)
+          CubicKeyframe(0, duration: 0.4)
+          CubicKeyframe(-40, duration: 0.4)
+          CubicKeyframe(0, duration: 0.4)
+          CubicKeyframe(-120, duration: 0.4)
+          CubicKeyframe(0, duration: 0.4)
+        }
+        
+        KeyframeTrack(\.angle) {
+          LinearKeyframe(.zero, duration: 2.2)
+          CubicKeyframe(.degrees(360), duration: 0.4)
+        }
+      }
+    }
+  }
+  
+  private func reservationButtonTapped() {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+      viewModel.popNextReservation()
+      withAnimation { isEditingReservation = false }
+    }
+  }
+  
+  private var reservationList: some View {
+    Grid {
+      GridRow {
+        Text("Name")
+          .font(.headline)
+        Text("Date")
+          .font(.headline)
+        if hClass == .regular {
+          Text("Time")
+            .font(.headline)
+        }
+        Text("# Guests")
+          .font(.headline)
+          .gridCellColumns(2)
+      }
+      ForEach(viewModel.reservations) { reservation in
+        GridRow {
+          Text(reservation.name)
+          Text(reservation.date, style: .date)
+            .gridCellColumns(
+              reservation.occasion == .none && hClass == .compact ? 2 : 1
+            )
+          if hClass == .regular {
+            Text(reservation.date, style: .time)
+          }
+          Text("\(reservation.numberOfGuests)")
+          if reservation.occasion != .none || hClass == .regular {
+            occasionIcon(for: reservation)
+          }
+        }
+        .padding()
+        
+        Divider()
       }
     }
   }
@@ -82,6 +195,12 @@ struct ReservationsView: View {
       EmptyView()
     }
   }
+}
+
+struct ReservationButtonAnimation {
+  var horizontalTranslation: Double = 0.0
+  var verticalTranslation: Double = 0.0
+  var angle: Angle = .zero
 }
 
 struct ReservationsView_Previews: PreviewProvider {
