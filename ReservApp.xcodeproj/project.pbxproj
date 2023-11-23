@@ -15,6 +15,9 @@
 		4016A74F29F96F200026F1B1 /* ReservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4016A74E29F96F200026F1B1 /* ReservationViewModel.swift */; };
 		4016A75129F96F390026F1B1 /* ReservationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4016A75029F96F390026F1B1 /* ReservationsViewModel.swift */; };
 		4016A75429F96F910026F1B1 /* ReservationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4016A75329F96F910026F1B1 /* ReservationService.swift */; };
+		40B0CB452B0C3B370009FD96 /* HandledReservations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B0CB442B0C3B370009FD96 /* HandledReservations.swift */; };
+		40B0CB472B0C3B790009FD96 /* HandledReservationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B0CB462B0C3B790009FD96 /* HandledReservationsViewModel.swift */; };
+		40C8AEE92B0D956800450C53 /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C8AEE82B0D956800450C53 /* Tips.swift */; };
 		40CEFDFC2A018DE500DD91B1 /* GuestTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CEFDFB2A018DE500DD91B1 /* GuestTableView.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +31,9 @@
 		4016A74E29F96F200026F1B1 /* ReservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewModel.swift; sourceTree = "<group>"; };
 		4016A75029F96F390026F1B1 /* ReservationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationsViewModel.swift; sourceTree = "<group>"; };
 		4016A75329F96F910026F1B1 /* ReservationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationService.swift; sourceTree = "<group>"; };
+		40B0CB442B0C3B370009FD96 /* HandledReservations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandledReservations.swift; sourceTree = "<group>"; };
+		40B0CB462B0C3B790009FD96 /* HandledReservationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandledReservationsViewModel.swift; sourceTree = "<group>"; };
+		40C8AEE82B0D956800450C53 /* Tips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
 		40CEFDFB2A018DE500DD91B1 /* GuestTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,8 +88,11 @@
 			isa = PBXGroup;
 			children = (
 				4016A75529F970880026F1B1 /* ReservationForm */,
+				40C8AEE82B0D956800450C53 /* Tips.swift */,
 				4016A74A29F969330026F1B1 /* ReservationsView.swift */,
 				4016A75029F96F390026F1B1 /* ReservationsViewModel.swift */,
+				40B0CB462B0C3B790009FD96 /* HandledReservationsViewModel.swift */,
+				40B0CB442B0C3B370009FD96 /* HandledReservations.swift */,
 			);
 			path = Reservations;
 			sourceTree = "<group>";
@@ -177,6 +186,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4016A75429F96F910026F1B1 /* ReservationService.swift in Sources */,
+				40C8AEE92B0D956800450C53 /* Tips.swift in Sources */,
+				40B0CB452B0C3B370009FD96 /* HandledReservations.swift in Sources */,
+				40B0CB472B0C3B790009FD96 /* HandledReservationsViewModel.swift in Sources */,
 				4016A74B29F969330026F1B1 /* ReservationsView.swift in Sources */,
 				40CEFDFC2A018DE500DD91B1 /* GuestTableView.swift in Sources */,
 				4016A74D29F969590026F1B1 /* ReservationView.swift in Sources */,
