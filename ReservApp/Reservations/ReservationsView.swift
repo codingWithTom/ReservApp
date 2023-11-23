@@ -6,31 +6,45 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct ReservationsView: View {
   @Environment(\.horizontalSizeClass) private var hClass
+  @EnvironmentObject private var appViewModel: AppViewModel
   @StateObject private var viewModel = ReservationsViewModel()
   @State private var showingReservationForm = false
   @State private var isEditingReservation = false
   @State private var cancelReservationToggle = false
   @State private var seatedReservationToggle = false
+  @State private var animateButton = false
+  private let manageReservationTip = ManageReservationTip()
+  private let pastReservationsTip = PastReservationsTip()
   
   var body: some View {
     ScrollView {
+      TipView(pastReservationsTip) { _ in
+        appViewModel.showPastReservations()
+        pastReservationsTip.invalidate(reason: .actionPerformed)
+      }
       if let upcomingReservation = viewModel.upcomingReservation {
         HStack(spacing: 100) {
           Text("Upcoming reservation: \(upcomingReservation.name) for \(upcomingReservation.numberOfGuests) guest at \(Text(upcomingReservation.date, style: .time))")
-            .phaseAnimator([1.0, 1.5]) { view, phase in
+            .phaseAnimator([1.0, 1.5], trigger: animateButton) { view, phase in
               view
                 .scaleEffect(x: phase, y: phase)
                 .foregroundStyle(phase == 1 ? Color.primary : Color.red)
             } animation: { _ in
                 .easeInOut(duration: 1)
+                .repeatForever()
             }
           
-          Button(action: { withAnimation { isEditingReservation.toggle() } }) {
+          Button(action: {
+            withAnimation { isEditingReservation.toggle() }
+            manageReservationTip.invalidate(reason: .actionPerformed)
+          }) {
             Image(systemName: "command.circle.fill")
           }
+          .popoverTip(manageReservationTip)
         }
         .padding()
       }
@@ -43,6 +57,13 @@ struct ReservationsView: View {
       reservationList
     }
     .navigationTitle("Reservations")
+    .onAppear {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        withAnimation {
+          animateButton.toggle()
+        }
+      }
+    }
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button(action: {
@@ -62,7 +83,7 @@ struct ReservationsView: View {
   private var reservationButtons: some View {
     HStack(spacing: 40) {
       Button(action: {
-        reservationButtonTapped()
+        reservationButtonTapped(wasSeated: false)
         cancelReservationToggle.toggle()
       }) {
         VStack {
@@ -96,7 +117,7 @@ struct ReservationsView: View {
       }
       
       Button(action: {
-        reservationButtonTapped()
+        reservationButtonTapped(wasSeated: true)
         seatedReservationToggle.toggle()
       }) {
         VStack {
@@ -135,9 +156,10 @@ struct ReservationsView: View {
     }
   }
   
-  private func reservationButtonTapped() {
+  private func reservationButtonTapped(wasSeated: Bool) {
     DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-      viewModel.popNextReservation()
+      PastReservationsTip.handledReservations.sendDonation()
+      viewModel.popNextReservation(wasSeated: wasSeated)
       withAnimation { isEditingReservation = false }
     }
   }
