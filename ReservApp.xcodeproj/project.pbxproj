@@ -19,6 +19,9 @@
 		40B0CB472B0C3B790009FD96 /* HandledReservationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B0CB462B0C3B790009FD96 /* HandledReservationsViewModel.swift */; };
 		40C8AEE92B0D956800450C53 /* Tips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C8AEE82B0D956800450C53 /* Tips.swift */; };
 		40CEFDFC2A018DE500DD91B1 /* GuestTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CEFDFB2A018DE500DD91B1 /* GuestTableView.swift */; };
+		40DE76062BA1272900D93AC0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DE76052BA1272900D93AC0 /* HomeView.swift */; };
+		40DE76082BA1273700D93AC0 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DE76072BA1273700D93AC0 /* HomeViewModel.swift */; };
+		40DE760A2BA1276F00D93AC0 /* HomeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DE76092BA1276F00D93AC0 /* HomeMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		40B0CB462B0C3B790009FD96 /* HandledReservationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandledReservationsViewModel.swift; sourceTree = "<group>"; };
 		40C8AEE82B0D956800450C53 /* Tips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tips.swift; sourceTree = "<group>"; };
 		40CEFDFB2A018DE500DD91B1 /* GuestTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestTableView.swift; sourceTree = "<group>"; };
+		40DE76052BA1272900D93AC0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		40DE76072BA1273700D93AC0 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		40DE76092BA1276F00D93AC0 /* HomeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +73,7 @@
 		4016A73A29F968310026F1B1 /* ReservApp */ = {
 			isa = PBXGroup;
 			children = (
+				40DE76042BA1272100D93AC0 /* Home */,
 				4016A75229F96F870026F1B1 /* Services */,
 				4016A74929F969120026F1B1 /* Reservations */,
 				4016A73B29F968310026F1B1 /* ReservAppApp.swift */,
@@ -115,6 +122,16 @@
 			path = ReservationForm;
 			sourceTree = "<group>";
 		};
+		40DE76042BA1272100D93AC0 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				40DE76052BA1272900D93AC0 /* HomeView.swift */,
+				40DE76072BA1273700D93AC0 /* HomeViewModel.swift */,
+				40DE76092BA1276F00D93AC0 /* HomeMessage.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,6 +159,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					halloween,
+				);
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
@@ -190,7 +210,10 @@
 				40B0CB452B0C3B370009FD96 /* HandledReservations.swift in Sources */,
 				40B0CB472B0C3B790009FD96 /* HandledReservationsViewModel.swift in Sources */,
 				4016A74B29F969330026F1B1 /* ReservationsView.swift in Sources */,
+				40DE76062BA1272900D93AC0 /* HomeView.swift in Sources */,
+				40DE760A2BA1276F00D93AC0 /* HomeMessage.swift in Sources */,
 				40CEFDFC2A018DE500DD91B1 /* GuestTableView.swift in Sources */,
+				40DE76082BA1273700D93AC0 /* HomeViewModel.swift in Sources */,
 				4016A74D29F969590026F1B1 /* ReservationView.swift in Sources */,
 				4016A73C29F968310026F1B1 /* ReservAppApp.swift in Sources */,
 				4016A75129F96F390026F1B1 /* ReservationsViewModel.swift in Sources */,
@@ -323,6 +346,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ReservApp/Preview Content\"";
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

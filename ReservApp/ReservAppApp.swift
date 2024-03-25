@@ -11,6 +11,7 @@ import TipKit
 enum AppDestinations {
   case upcoming
   case past
+  case home
 }
 
 final class AppViewModel: ObservableObject {
@@ -26,7 +27,6 @@ struct ReservAppApp: App {
   @StateObject var viewModel = AppViewModel()
   
   init() {
-    try? Tips.resetDatastore()
     try? Tips.configure()
   }
   
@@ -40,6 +40,10 @@ struct ReservAppApp: App {
   private var sidebar: some View {
     NavigationSplitView {
       List(selection: $viewModel.destination) {
+        NavigationLink(value: AppDestinations.home) {
+          Label("Home", systemImage: "house.fill")
+        }
+        
         NavigationLink(value: AppDestinations.upcoming) {
           Label("Reservations", systemImage: "plus")
         }
@@ -50,10 +54,13 @@ struct ReservAppApp: App {
       }
       .listStyle(.sidebar)
     } detail: {
-      if viewModel.destination == .past {
-        HandledReservations()
-      } else {
+      switch viewModel.destination {
+      case .upcoming, .none:
         ReservationsView()
+      case .past:
+        HandledReservations()
+      case .home:
+        HomeView()
       }
     }
   }
